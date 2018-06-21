@@ -1,6 +1,7 @@
 FROM scratch
 
-COPY .  /server
+COPY survey-ui/dist/.  /server/survey-ui/dist
+COPY main  /server
 
 WORKDIR  /server
 

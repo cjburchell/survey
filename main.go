@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gogo/protobuf/test/indeximport-issue72/index"
 	"github.com/gorilla/mux"
 	"net/http"
 	"time"
@@ -10,6 +11,13 @@ import (
 
 func main() {
 	r := mux.NewRouter()
+
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "survey-ui/dist/survey-ui/index.html")
+	})
+
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("survey-ui/dist/survey-ui"))))
+
 	r.HandleFunc("/questions", handleGetQuestions).Methods("GET")
 	r.HandleFunc("/answers", handleGetAnswers).Methods("GET")
 	r.HandleFunc("/answers", handleSetAnswers).Methods("POST")
