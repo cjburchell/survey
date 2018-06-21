@@ -11,14 +11,15 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "survey-ui/dist/survey-ui/index.html")
-	})
+	//r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	//	http.ServeFile(w, r, "survey-ui/dist/survey-ui/index.html")
+	//})
 
-	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("survey-ui/dist/survey-ui"))))
+	//r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("survey-ui/dist/survey-ui"))))
 
+	r.HandleFunc("/info", handleGetInfo).Methods("GET")
 	r.HandleFunc("/questions", handleGetQuestions).Methods("GET")
-	r.HandleFunc("/answers", handleGetAnswers).Methods("GET")
+	r.HandleFunc("/results", handleGetResults).Methods("GET")
 	r.HandleFunc("/answers", handleSetAnswers).Methods("POST")
 
 	srv := &http.Server{
@@ -33,6 +34,13 @@ func main() {
 	}
 }
 
+func handleGetInfo(w http.ResponseWriter, _ *http.Request) {
+	reply, _ := json.Marshal("Its Ok!")
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(reply)
+}
+
 func handleGetQuestions(w http.ResponseWriter, _ *http.Request) {
 	reply, _ := json.Marshal("it works!")
 	w.WriteHeader(http.StatusOK)
@@ -40,7 +48,7 @@ func handleGetQuestions(w http.ResponseWriter, _ *http.Request) {
 	w.Write(reply)
 }
 
-func handleGetAnswers(w http.ResponseWriter, _ *http.Request) {
+func handleGetResults(w http.ResponseWriter, _ *http.Request) {
 	reply, _ := json.Marshal("it works!")
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
