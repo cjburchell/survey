@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gogo/protobuf/test/indeximport-issue72/index"
 	"github.com/gorilla/mux"
 	"net/http"
 	"time"

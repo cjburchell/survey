@@ -3,30 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "476sp1Fhy3W2s+a5MoWVxfL2TLU=",
-			"path": "github.com/gogo/protobuf/gogoproto",
-			"revision": "35b81a066e522fb86ece043a8ef1dbfa10b4fed1",
-			"revisionTime": "2017-12-13T10:47:50Z"
-		},
-		{
-			"checksumSHA1": "z+ru/H80S+AN2glztGEGe3KKS/A=",
-			"path": "github.com/gogo/protobuf/proto",
-			"revision": "35b81a066e522fb86ece043a8ef1dbfa10b4fed1",
-			"revisionTime": "2017-12-13T10:47:50Z"
-		},
-		{
-			"checksumSHA1": "9CqgJnMxNAyKOVHbovAfeyxk5W8=",
-			"path": "github.com/gogo/protobuf/protoc-gen-gogo/descriptor",
-			"revision": "35b81a066e522fb86ece043a8ef1dbfa10b4fed1",
-			"revisionTime": "2017-12-13T10:47:50Z"
-		},
-		{
-			"checksumSHA1": "r7ZGxQ6jLAKJNYXGRcGCExxWlj0=",
-			"path": "github.com/gogo/protobuf/test/indeximport-issue72/index",
-			"revision": "35b81a066e522fb86ece043a8ef1dbfa10b4fed1",
-			"revisionTime": "2017-12-13T10:47:50Z"
-		},
-		{
 			"checksumSHA1": "ygXockrx7DYmGK9kAojU/Zvbu6Y=",
 			"path": "github.com/gorilla/mux",
 			"revision": "5ab525f4fb1678e197ae59401e9050fa0b6cb5fd",
