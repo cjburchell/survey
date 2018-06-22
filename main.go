@@ -11,11 +11,11 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	//r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	//	http.ServeFile(w, r, "survey-ui/dist/survey-ui/index.html")
-	//})
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "survey-ui/dist/survey-ui/index.html")
+	})
 
-	//r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("survey-ui/dist/survey-ui"))))
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("survey-ui/dist/survey-ui"))))
 
 	r.HandleFunc("/info", handleGetInfo).Methods("GET")
 	r.HandleFunc("/questions", handleGetQuestions).Methods("GET")
