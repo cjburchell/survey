@@ -1,0 +1,19 @@
+version: '2'
+services:
+  mongodb:
+    image: "mongo:3"
+    ports:
+     - "27017:27017"
+    volumes:
+     - /data/db:/data/db
+  reefstatus:
+    image: "cjburchell/survey:latest"
+    environment:
+         - DATABASE_URL=mongodb
+         - COUCHDB_PORT=5984
+         - LOG_FILE_PATH=/log/server.log
+         - LOG_CONSOLE=true
+         - LOG_LEVEL=1
+         - LOG_FILE=false
+    ports:
+     - "8099:8088"

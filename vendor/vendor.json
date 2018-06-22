@@ -3,10 +3,54 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "oaIFwzQ4rYV9UimAPQnfZrBu6NE=",
+			"path": "github.com/cjburchell/reefstatus-go/common",
+			"revision": "45d33e98fcc5a2ad670199bcb71bf122db1e564b",
+			"revisionTime": "2018-06-14T11:37:48Z"
+		},
+		{
+			"checksumSHA1": "nI9awHuB5UJF5UohdiszPhy2UQ8=",
+			"path": "github.com/cjburchell/reefstatus-go/common/log",
+			"revision": "45d33e98fcc5a2ad670199bcb71bf122db1e564b",
+			"revisionTime": "2018-06-14T11:37:48Z"
+		},
+		{
 			"checksumSHA1": "ygXockrx7DYmGK9kAojU/Zvbu6Y=",
 			"path": "github.com/gorilla/mux",
 			"revision": "5ab525f4fb1678e197ae59401e9050fa0b6cb5fd",
 			"revisionTime": "2017-12-08T16:08:15Z"
+		},
+		{
+			"checksumSHA1": "YFQU7VULoTU4TwPz3V97b2exyxE=",
+			"path": "gopkg.in/mgo.v2",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "jczI9Z+BmhUsE77Q3SOmk+agclI=",
+			"path": "gopkg.in/mgo.v2/bson",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "THym5Z04Rz7tjLhnIusfIxvJHKA=",
+			"path": "gopkg.in/mgo.v2/internal/json",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "WnXjUmdgl3mTwwqYBxbO974iCe8=",
+			"path": "gopkg.in/mgo.v2/internal/sasl",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "w0zmUfvc8qJb+iS/IDJWptrBpIg=",
+			"path": "gopkg.in/mgo.v2/internal/scram",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "2FnVZ1894IO0AC4WA2UCvzlGOTQ=",
+			"origin": "github.com/cjburchell/reefstatus-go/vendor/gopkg.in/natefinch/lumberjack.v2",
+			"path": "gopkg.in/natefinch/lumberjack.v2",
+			"revision": "45d33e98fcc5a2ad670199bcb71bf122db1e564b",
+			"revisionTime": "2018-06-14T11:37:48Z"
 		}
 	],
 	"rootPath": "github.com/cjburchell/survey"
