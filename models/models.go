@@ -1,5 +1,11 @@
 package models
 
+type Survey struct {
+	Id        string     `json:"id"`
+	Name      string     `json:"name"`
+	Questions []Question `json:"questions"`
+}
+
 type Question struct {
 	Id      string   `json:"id"`
 	Text    string   `json:"text"`
@@ -7,12 +13,13 @@ type Question struct {
 	Choices []string `json:"choices"`
 }
 
-type SurveyAnswer struct {
+type Answer struct {
 	QuestionId string `json:"questionId"`
 	Answer     string `json:"answer"`
 }
 
-type SurveyResult struct {
+type Result struct {
+	SurveyId   string `bison:"surveyId" json:"surveyId"`
 	QuestionId string `bison:"questionId" json:"questionId"`
 	Answer     string `bison:"answer" json:"answer"`
 	Count      int    `bison:"count" json:"count"`
