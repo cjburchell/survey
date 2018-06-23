@@ -2,6 +2,8 @@ package database
 
 import (
 	"github.com/cjburchell/reefstatus-go/common"
+	"github.com/cjburchell/reefstatus-go/common/log"
+	"github.com/cjburchell/survey/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -15,17 +17,12 @@ const resultsCollection = "results"
 func Connect() (err error) {
 	databaseName = common.GetEnv("DATABASE_NAME", "survey")
 	databaseUrl := common.GetEnv("DATABASE_URL", "mongodb")
+	log.Printf("Connecting to Database at %s", databaseUrl)
 	session, err = mgo.Dial(databaseUrl)
 	return
 }
 
-type SurveyResult struct {
-	QuestionId string `bison:"questionId" json:"questionId"`
-	Answer     string `bison:"answer" json:"answer"`
-	Count      int    `bison:"count" json:"count"`
-}
-
-func GetAllResults() (results []SurveyResult, err error) {
+func GetAllResults() (results []models.SurveyResult, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
@@ -33,7 +30,7 @@ func GetAllResults() (results []SurveyResult, err error) {
 	return
 }
 
-func GetResults(questionId string) (results []SurveyResult, err error) {
+func GetResults(questionId string) (results []models.SurveyResult, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
