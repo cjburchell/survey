@@ -7,8 +7,8 @@
       "text": "How likely is it that you would recommend this company to a friend or colleague?",
       "type": "FromZeroTo10",
       "choices": [
-        "Not at all likely",
-        "extremely likely"
+        { "id": "0",  "text":"Not at all likely"},
+        { "id": "1",  "text":"Extremely likely"}
       ]
     },
     {
@@ -16,11 +16,11 @@
       "text": "Overall, how satisfied or dissatisfied are you with our company?",
       "type": "MultipleChoice",
       "choices": [
-        "Very satisfied",
-        "Somewhat satisfied",
-        "Neither satisfied nor dissatisfied",
-        "Somewhat dissatisfied",
-        "Very dissatisfied"
+        { "id": "0",  "text":"Very satisfied"},
+        { "id": "1",  "text":"Somewhat satisfied"},
+        { "id": "2",  "text":"Neither satisfied nor dissatisfied"},
+        { "id": "3",  "text":"Somewhat dissatisfied"},
+        { "id": "4",  "text":"Very dissatisfied"}
       ]
     },
     {
@@ -28,16 +28,16 @@
       "text": "Which of the following words would you use to describe our products? Select all that apply.",
       "type": "MultipleSelection",
       "choices": [
-        "Reliable",
-        "High quality",
-        "Useful",
-        "Unique",
-        "Good value for money",
-        "Overpriced",
-        "Impractical",
-        "Ineffective",
-        "Poor quality",
-        "Unreliable"
+        { "id": "0",  "text":"Reliable"},
+        { "id": "1",  "text":"High quality"},
+        { "id": "2",  "text":"Useful"},
+        { "id": "3",  "text":"Unique"},
+        { "id": "4",  "text":"Good value for money"},
+        { "id": "5",  "text":"Overpriced"},
+        { "id": "6",  "text":"Impractical"},
+        { "id": "7",  "text":"Ineffective"},
+        { "id": "8",  "text":"Poor quality"},
+        { "id": "9",  "text":"Unreliable"}
       ]
     },
     {
@@ -45,11 +45,11 @@
       "text": "How well do our products meet your needs?",
       "type": "MultipleChoice",
       "choices": [
-        "Extremely well",
-        "Very well",
-        "Somewhat well",
-        "Not so well",
-        "Not at all well"
+        { "id": "0",  "text":"Extremely well"},
+        { "id": "1",  "text":"Very well"},
+        { "id": "2",  "text":"Somewhat well"},
+        { "id": "3",  "text":"Not so well"},
+        { "id": "4",  "text":"Not at all well"}
       ]
     },
     {
@@ -57,11 +57,11 @@
       "text": "How would you rate the quality of the product?",
       "type": "MultipleChoice",
       "choices": [
-        "Very high quality",
-        "High quality",
-        "Neither high nor low quality",
-        "Low quality",
-        "Very low quality"
+        { "id": "0",  "text":"Very high quality"},
+        { "id": "1",  "text":"High quality"},
+        { "id": "2",  "text":"Neither high nor low quality"},
+        { "id": "3",  "text":"Low quality"},
+        { "id": "4",  "text":"Very low quality"}
       ]
     },
     {
@@ -69,11 +69,11 @@
       "text": "How would you rate the value for money of the product?",
       "type": "MultipleChoice",
       "choices": [
-        "Excellent",
-        "Above average",
-        "Average",
-        "Below average",
-        "Poor"
+        { "id": "0",  "text":"Excellent"},
+        { "id": "1",  "text":"Above average"},
+        { "id": "2",  "text":"Average"},
+        { "id": "3",  "text":"Below average"},
+        { "id": "4",  "text":"Poor"}
       ]
     },
     {
@@ -81,12 +81,12 @@
       "text": "How responsive have we been to your questions or concerns about our products?",
       "type": "MultipleChoice",
       "choices": [
-        "Extremely responsive",
-        "Very responsive",
-        "Somewhat responsive",
-        "Not so responsive",
-        "Not at all responsive",
-        "Not applicable"
+        { "id": "0",  "text":"Extremely responsive"},
+        { "id": "1",  "text":"Very responsive"},
+        { "id": "2",  "text":"Somewhat responsive"},
+        { "id": "3",  "text":"Not so responsive"},
+        { "id": "4",  "text":"Not at all responsive"},
+        { "id": "5",  "text":"Not applicable"}
       ]
     },
     {
@@ -94,12 +94,12 @@
       "text": "How long have you been a customer of our company?",
       "type": "MultipleChoice",
       "choices": [
-        "This is my first purchase",
-        "Less than six months",
-        "Six months to a year",
-        "1 - 2 years",
-        "3 or more years",
-        "I haven't made a purchase yet"
+        { "id": "0",  "text":"This is my first purchase"},
+        { "id": "1",  "text":"Less than six months"},
+        { "id": "2",  "text":"Six months to a year"},
+        { "id": "3",  "text":"1 - 2 years"},
+        { "id": "4",  "text":"3 or more years"},
+        { "id": "5",  "text":"I haven't made a purchase yet"}
       ]
     },
     {
@@ -107,11 +107,11 @@
       "text": "How likely are you to purchase any of our products again?",
       "type": "MultipleChoice",
       "choices": [
-        "Extremely likely",
-        "Very likely",
-        "Somewhat likely",
-        "Not so likely",
-        "Not at all likely"
+        { "id": "1",  "text":"Extremely likely"},
+        { "id": "2",  "text":"Very likely"},
+        { "id": "3",  "text":"Somewhat likely"},
+        { "id": "4",  "text":"Not so likely"},
+        { "id": "5",  "text":"Not at all likely"}
       ]
     },
     {

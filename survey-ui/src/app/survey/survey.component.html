@@ -1,0 +1,23 @@
+<nav  class="navbar navbar-expand-sm bg-light fixed-top">
+  <h2 >{{ survey.name }}</h2>
+</nav >
+
+  <div class="row container-fluid" style="margin-top:80px">
+    <div class="col"></div>
+    <div class="col-6">
+      <app-question *ngFor="let question of survey.questions; let i = index" [question] = "question" [number] = "i"></app-question>
+    </div>
+    <div class="col"></div>
+  </div>
+
+
+
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary btn-lg float-right" (click)="onDone()">Done</button>
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-primary btn-lg float-left" (click)="onViewResults()">Results</button>
+  </div>
+</div>
+
