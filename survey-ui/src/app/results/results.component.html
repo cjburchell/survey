@@ -1,51 +1,21 @@
-<h3>{{number + 1}}. {{ question?.text }}</h3>
+<h4>{{number + 1}}. {{ question?.text }}</h4>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-sm">
   <thead>
-  <tr>
-    <th class="col-2">Answer</th>
-    <th class="col-7"></th>
-    <th class="col-2">Number of Responses</th>
-    <th class="col-1">Response Ratio</th>
-  </tr>
+    <tr class="d-flex">
+      <th class="col-3">Answer</th>
+      <th class="col-7"><div class="row"><div class="col text-left">0%</div> <div class="col text-right">100%</div></div></th>
+      <th class="col-1">Count</th>
+      <th class="col-1">Percent</th>
+    </tr>
   </thead>
   <tbody>
- <ng-template [ngIf]="question?.type === 'FromZeroTo10'" class="flex-wrap">
-      <tr *ngFor="let result of results">
-        <td>{{result.answer}}</td>
-        <td><ngb-progressbar type="info" [value]="(result.count/submitCount) * 100"></ngb-progressbar></td>
-        <td class="text-right">{{(result.count)}}</td>
-        <td class="text-right">{{(result.count/submitCount) * 100 }}%</td>
-      </tr>
-</ng-template>
-
-<ng-template [ngIf]="question?.type === 'MultipleChoice'" class="flex-wrap">
-  <tr *ngFor="let result of results">
-    <td>{{choices[result.answer].text}}</td>
-    <td><ngb-progressbar type="info" [value]="(result.count/submitCount) * 100"></ngb-progressbar></td>
-    <td class="text-right">{{(result.count)}}</td>
-    <td class="text-right">{{(result.count/submitCount) * 100 }}%</td>
-  </tr>
-</ng-template>
-
-<ng-template [ngIf]="question.type === 'MultipleSelection'" class="flex-wrap">
-  <tr *ngFor="let result of results">
-    <td>{{choices[result.answer].text}}</td>
-    <td><ngb-progressbar type="info" [value]="(result.count/submitCount) * 100"></ngb-progressbar></td>
-    <td class="text-right">{{(result.count)}}</td>
-    <td class="text-right">{{(result.count/submitCount) * 100 }}%</td>
-  </tr>
-</ng-template>
-
-<ng-template [ngIf]="question?.type === 'Text'" class="flex-wrap">
-  <tr *ngFor="let result of results">
-    <td>{{result.answer}}</td>
-    <td><ngb-progressbar type="info" [value]="(result.count/submitCount) * 100"></ngb-progressbar></td>
-    <td class="text-right">{{(result.count)}}</td>
-    <td class="text-right">{{(result.count/submitCount) * 100 }}%</td>
-  </tr>
-
-</ng-template>
+    <tr class="d-flex" *ngFor="let result of results">
+      <td class="col-3">{{result.answer}}</td>
+      <td class="col-7"><ngb-progressbar type="info" [value]="(result.count/submitCount) * 100"></ngb-progressbar></td>
+      <td class="col-1 text-right">{{(result.count)}}</td>
+      <td class="col-1 text-right">{{(result.count/submitCount) | percent }}</td>
+    </tr>
   </tbody>
 </table>
 

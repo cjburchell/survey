@@ -5,10 +5,10 @@
     {
       "id": "q1",
       "text": "How likely is it that you would recommend this company to a friend or colleague?",
-      "type": "FromZeroTo10",
+      "type": "Range",
       "choices": [
-        { "id": "c0",  "text":"Not at all likely"},
-        { "id": "c1",  "text":"Extremely likely"}
+        { "id": "c0",  "text":"Not at all likely", "value": 0},
+        { "id": "c1",  "text":"Extremely likely", "value": 10}
       ]
     },
     {

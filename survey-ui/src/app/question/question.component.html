@@ -1,7 +1,7 @@
-<h3>{{number + 1}}. {{ question?.text }}</h3>
+<h4>{{number + 1}}. {{ question?.text }}</h4>
 
 <div [formGroup]="group">
-  <ng-template [ngIf]="question?.type === 'FromZeroTo10'" class="mx-auto">
+  <ng-template [ngIf]="question?.type === 'Range'" class="mx-auto">
     <div class="row">
       <div class="col">
         <h5 class="float-left">{{question.choices[0].text}}</h5>
@@ -12,38 +12,8 @@
     </div>
 
     <div class="btn-group btn-group-toggle d-flex" ngbRadioGroup name="{{question.id}}" formControlName="answer">
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="0">0
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="1">1
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="2">2
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="3">3
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="4">4
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="5">5
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="6">6
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="7">7
-      </label>
-      <label ngbButtonLabel class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="8">8
-      </label>
-      <label ngbButtonLabel class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="9">9
-      </label>
-      <label ngbButtonLabel  class="btn btn-secondary w-100">
-        <input ngbButton type="radio" value="10">10
+      <label ngbButtonLabel  class="btn btn-outline-secondary w-100" *ngFor="let choice of choices">
+        <input ngbButton type="radio" value="{{choice}}">{{choice}}
       </label>
     </div>
   </ng-template>

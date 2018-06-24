@@ -5,6 +5,7 @@ import {Observable} from "rxjs/index";
 export interface Choice{
   id: string
   text: string
+  value: number
 }
 
 export interface Question {

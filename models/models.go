@@ -7,8 +7,9 @@ type Survey struct {
 }
 
 type Choice struct {
-	Id   string `json:"id"`
-	Text string `json:"text"`
+	Id    string `json:"id"`
+	Text  string `json:"text"`
+	Value int    `json:"value"`
 }
 
 type Question struct {

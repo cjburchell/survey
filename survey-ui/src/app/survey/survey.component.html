@@ -9,8 +9,8 @@
         (ngSubmit)="onDone(answersForm.value)">
 
         <div class="row container-fluid">
-          <div class="col"></div>
-          <div class="col-6">
+          <div class="col-2"></div>
+          <div class="col-8">
               <div formArrayName="answers">
                 <div *ngFor="let question of survey?.questions; let i = index">
                   <div [formGroupName]="i">
@@ -19,15 +19,15 @@
                 </div>
               </div>
           </div>
-          <div class="col"></div>
+          <div class="col-2"></div>
         </div>
 
         <div class="row" style="margin-top:10px; margin-bottom:10px">
           <div class="col">
-            <button type="submit" class="btn btn-primary btn-lg float-right" [disabled]="!answersForm.valid">Done</button>
+            <button type="submit" class="btn btn-outline-success btn-lg float-right" [disabled]="!answersForm.valid">Done</button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-primary btn-lg float-left" (click)="onViewResults()">Results</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg float-left" (click)="onViewResults()">Results</button>
           </div>
         </div>
       </form>
@@ -46,6 +46,10 @@
                 <app-results [question] = "question" [number] = "i" [surveyId]="surveyId" [submitCount]="submitCount"></app-results>
             </div>
         </div>
+      </div>
+
+      <div class="row justify-content-center" style="margin-top:10px; margin-bottom:10px">
+          <button type="button" class="btn btn-outline-secondary btn-lg" (click)="showResults = false">Back</button>
       </div>
     </div>
   </ng-template>
