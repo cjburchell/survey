@@ -1,0 +1,123 @@
+{
+  "id": "s1",
+  "name": "Customer Satisfaction Survey",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "How likely is it that you would recommend this company to a friend or colleague?",
+      "type": "FromZeroTo10",
+      "choices": [
+        { "id": "c0",  "text":"Not at all likely"},
+        { "id": "c1",  "text":"Extremely likely"}
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "Overall, how satisfied or dissatisfied are you with our company?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c0",  "text":"Very satisfied"},
+        { "id": "c1",  "text":"Somewhat satisfied"},
+        { "id": "c2",  "text":"Neither satisfied nor dissatisfied"},
+        { "id": "c3",  "text":"Somewhat dissatisfied"},
+        { "id": "c4",  "text":"Very dissatisfied"}
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "Which of the following words would you use to describe our products? Select all that apply.",
+      "type": "MultipleSelection",
+      "choices": [
+        { "id": "c0",  "text":"Reliable"},
+        { "id": "c1",  "text":"High quality"},
+        { "id": "c2",  "text":"Useful"},
+        { "id": "c3",  "text":"Unique"},
+        { "id": "c4",  "text":"Good value for money"},
+        { "id": "c5",  "text":"Overpriced"},
+        { "id": "c6",  "text":"Impractical"},
+        { "id": "c7",  "text":"Ineffective"},
+        { "id": "c8",  "text":"Poor quality"},
+        { "id": "c9",  "text":"Unreliable"}
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "How well do our products meet your needs?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c0",  "text":"Extremely well"},
+        { "id": "c1",  "text":"Very well"},
+        { "id": "c2",  "text":"Somewhat well"},
+        { "id": "c3",  "text":"Not so well"},
+        { "id": "c4",  "text":"Not at all well"}
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "How would you rate the quality of the product?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c0",  "text":"Very high quality"},
+        { "id": "c1",  "text":"High quality"},
+        { "id": "c2",  "text":"Neither high nor low quality"},
+        { "id": "c3",  "text":"Low quality"},
+        { "id": "c4",  "text":"Very low quality"}
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "How would you rate the value for money of the product?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c0",  "text":"Excellent"},
+        { "id": "c1",  "text":"Above average"},
+        { "id": "c2",  "text":"Average"},
+        { "id": "c3",  "text":"Below average"},
+        { "id": "c4",  "text":"Poor"}
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "How responsive have we been to your questions or concerns about our products?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c0",  "text":"Extremely responsive"},
+        { "id": "c1",  "text":"Very responsive"},
+        { "id": "c2",  "text":"Somewhat responsive"},
+        { "id": "c3",  "text":"Not so responsive"},
+        { "id": "c4",  "text":"Not at all responsive"},
+        { "id": "c5",  "text":"Not applicable"}
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "How long have you been a customer of our company?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c0",  "text":"This is my first purchase"},
+        { "id": "c1",  "text":"Less than six months"},
+        { "id": "c2",  "text":"Six months to a year"},
+        { "id": "c3",  "text":"1 - 2 years"},
+        { "id": "c4",  "text":"3 or more years"},
+        { "id": "c5",  "text":"I haven't made a purchase yet"}
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "How likely are you to purchase any of our products again?",
+      "type": "MultipleChoice",
+      "choices": [
+        { "id": "c1",  "text":"Extremely likely"},
+        { "id": "c2",  "text":"Very likely"},
+        { "id": "c3",  "text":"Somewhat likely"},
+        { "id": "c4",  "text":"Not so likely"},
+        { "id": "c5",  "text":"Not at all likely"}
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "Do you have any other comments, questions, or concerns?",
+      "type": "Text"
+    }
+  ]
+}

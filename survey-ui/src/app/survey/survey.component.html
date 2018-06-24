@@ -1,23 +1,56 @@
-<nav  class="navbar navbar-expand-sm bg-light fixed-top">
-  <h2 >{{ survey.name }}</h2>
-</nav >
+<ng-template [ngIf]="!showResults && survey">
+    <nav  class="navbar navbar-expand-sm bg-light fixed-top">
+      <h2>{{ survey?.name }}</h2>
+    </nav >
 
-  <div class="row container-fluid" style="margin-top:80px">
-    <div class="col"></div>
-    <div class="col-6">
-      <app-question *ngFor="let question of survey.questions; let i = index" [question] = "question" [number] = "i"></app-question>
+    <div style="margin-top:80px">
+      <form
+        [formGroup] = "answersForm"
+        (ngSubmit)="onDone(answersForm.value)">
+
+        <div class="row container-fluid">
+          <div class="col"></div>
+          <div class="col-6">
+              <div formArrayName="answers">
+                <div *ngFor="let question of survey?.questions; let i = index">
+                  <div [formGroupName]="i">
+                    <app-question [question] = "question" [number] = "i" [group]="answersForm.controls.answers.controls[i]"></app-question>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col"></div>
+        </div>
+
+        <div class="row" style="margin-top:10px; margin-bottom:10px">
+          <div class="col">
+            <button type="submit" class="btn btn-primary btn-lg float-right" [disabled]="!answersForm.valid">Done</button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-primary btn-lg float-left" (click)="onViewResults()">Results</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="col"></div>
-  </div>
+</ng-template>
+
+  <ng-template [ngIf]="showResults && survey">
+    <nav  class="navbar navbar-expand-sm bg-light fixed-top">
+      <h2>{{ survey?.name }} Results</h2>
+    </nav >
+
+    <div style="margin-top:80px">
+      <div class="row container-fluid">
+        <div class="col">
+            <div *ngFor="let question of survey?.questions; let i = index">
+                <app-results [question] = "question" [number] = "i" [surveyId]="surveyId" [submitCount]="submitCount"></app-results>
+            </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 
 
 
-<div class="row">
-  <div class="col">
-    <button type="button" class="btn btn-primary btn-lg float-right" (click)="onDone()">Done</button>
-  </div>
-  <div class="col">
-    <button type="button" class="btn btn-primary btn-lg float-left" (click)="onViewResults()">Results</button>
-  </div>
-</div>
+
 

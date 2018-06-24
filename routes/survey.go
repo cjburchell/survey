@@ -15,6 +15,7 @@ func Setup(router *mux.Router) {
 	surveyRoute.HandleFunc("/{surveyId}/results", handleGetResults).Methods("GET")
 	surveyRoute.HandleFunc("/{surveyId}/results/{questionId}", handleGetResultsForQuestion).Methods("GET")
 	surveyRoute.HandleFunc("/{surveyId}/answers", handleSetAnswers).Methods("POST")
+	surveyRoute.HandleFunc("/{surveyId}/count", handleGetSurveyCount).Methods("GET")
 
 	router.HandleFunc("/@status", func(writer http.ResponseWriter, _ *http.Request) {
 		reply, _ := json.Marshal("Ok")
@@ -44,6 +45,32 @@ func handleGetSurvey(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(reply)
 }
 
+func handleGetSurveyCount(writer http.ResponseWriter, request *http.Request) {
+	log.Debugf("handleGetSurveyCount %s", request.URL.String())
+
+	vars := mux.Vars(request)
+	surveyId := vars["surveyId"]
+
+	count := database.GetSubmitCount(surveyId)
+
+	result := struct {
+		Count int `json:"count"`
+	}{
+		count,
+	}
+
+	reply, err := json.Marshal(result)
+	if err != nil {
+		log.Error(err, "Marshal Failed")
+		writer.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	writer.WriteHeader(http.StatusOK)
+	writer.Header().Set("Content-Type", "application/json")
+	writer.Write(reply)
+}
+
 func handleGetResults(writer http.ResponseWriter, request *http.Request) {
 	log.Debugf("handleGetResults %s", request.URL.String())
 
@@ -58,7 +85,7 @@ func handleGetResults(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	if results == nil {
-		writer.WriteHeader(http.StatusNotFound)
+		writer.WriteHeader(http.StatusOK)
 		return
 	}
 
@@ -89,7 +116,7 @@ func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Reque
 	}
 
 	if results == nil {
-		writer.WriteHeader(http.StatusNotFound)
+		writer.WriteHeader(http.StatusOK)
 		return
 	}
 
@@ -111,13 +138,19 @@ func handleSetAnswers(writer http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	surveyId := vars["surveyId"]
 
-	var body []byte
-	request.Body.Read(body)
+	decoder := json.NewDecoder(request.Body)
 	var answers []models.Answer
-	err := json.Unmarshal(body, &answers)
+	err := decoder.Decode(&answers)
 	if err != nil {
 		log.Error(err, "Unmarshal Failed")
 		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = database.IncrementSubmitCount(surveyId)
+	if err != nil {
+		log.Error(err, "Unable to Increment Result")
+		writer.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 

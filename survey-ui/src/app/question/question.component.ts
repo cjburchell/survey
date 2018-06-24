@@ -1,15 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {Choice, Question} from "../survey.service";
+import { Component, Input } from '@angular/core';
+import {Question} from "../survey.service";
+import {FormGroup} from "@angular/forms";
+
 
 @Component({
   selector: 'app-question',
-  templateUrl: './question.component.html',
-  styleUrls: []
+  templateUrl: './question.component.html'
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent  {
+  @Input() group: FormGroup;
   @Input() question : Question;
   @Input() number : number;
-
-  ngOnInit() {
-  }
 }

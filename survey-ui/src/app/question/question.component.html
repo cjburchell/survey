@@ -1,8 +1,7 @@
-<h3>
-{{number + 1}}. {{ question.text }}
-</h3>
-<div class="form-group">
-  <ng-template [ngIf]="question.type === 'FromZeroTo10'" class="mx-auto">
+<h3>{{number + 1}}. {{ question?.text }}</h3>
+
+<div [formGroup]="group">
+  <ng-template [ngIf]="question?.type === 'FromZeroTo10'" class="mx-auto">
     <div class="row">
       <div class="col">
         <h5 class="float-left">{{question.choices[0].text}}</h5>
@@ -12,61 +11,70 @@
       </div>
     </div>
 
-    <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option0">0
+    <div class="btn-group btn-group-toggle d-flex" ngbRadioGroup name="{{question.id}}" formControlName="answer">
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="0">0
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option1">1
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="1">1
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option2">2
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="2">2
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option3">3
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="3">3
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option4">4
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="4">4
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option5">5
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="5">5
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option6">6
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="6">6
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option7">7
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="7">7
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option8">8
+      <label ngbButtonLabel class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="8">8
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option9">9
+      <label ngbButtonLabel class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="9">9
       </label>
-      <label class="btn btn-secondary w-100">
-        <input type="radio" name="{{question.id}}" id="option10">10
-      </label>
-    </div>
-  </ng-template>
-
-  <ng-template [ngIf]="question.type === 'MultipleChoice'">
-    <div class="form-check" *ngFor="let choice of question.choices">
-      <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="{{question.id}}">{{choice.text}}
+      <label ngbButtonLabel  class="btn btn-secondary w-100">
+        <input ngbButton type="radio" value="10">10
       </label>
     </div>
   </ng-template>
 
-  <ng-template [ngIf]="question.type === 'MultipleSelection'">
-      <div class="form-check" *ngFor="let choice of question.choices">
-        <label class="form-check-label">
-          <input type="checkbox" class="form-check-input" value="" name="{{question.id}}_{{choice.id}}">{{choice.text}}
-        </label>
+  <ng-template [ngIf]="question?.type === 'MultipleChoice'">
+    <div class="d-flex flex-column" ngbRadioGroup name="{{question.id}}" formControlName="answer">
+        <div *ngFor="let choice of question.choices">
+          <label ngbButtonLabel>
+            <input ngbButton type="radio" [value]="choice.id">{{choice.text}}
+          </label>
+        </div>
+    </div>
+  </ng-template>
+
+  <ng-template [ngIf]="question?.type === 'Text'">
+    <textarea class="form-control" rows="5" name="{{question.id}}" formControlName="answer"></textarea>
+  </ng-template>
+
+
+  <ng-template [ngIf]="question.type === 'MultipleSelection'" class="flex-wrap">
+    <div class="d-flex flex-column" formArrayName="choices">
+      <div *ngFor="let choice of question.choices; let i = index">
+        <div [formGroupName]="i">
+          <label ngbButtonLabel>
+            <input ngbButton type="checkbox" formControlName="answer">{{choice.text}}
+          </label>
+        </div>
       </div>
+    </div>
   </ng-template>
-
-  <ng-template [ngIf]="question.type === 'Text'">
-    <textarea class="form-control" rows="5" name="{{question.id}}"></textarea>
-  </ng-template>
-
 </div>
+
+
+

@@ -24,8 +24,8 @@ type Answer struct {
 }
 
 type Result struct {
-	SurveyId   string `bison:"surveyId" json:"surveyId"`
-	QuestionId string `bison:"questionId" json:"questionId"`
-	Answer     string `bison:"answer" json:"answer"`
-	Count      int    `bison:"count" json:"count"`
+	SurveyID   string `bson:"surveyId" json:"surveyId"`
+	QuestionID string `bson:"questionId" json:"questionId"`
+	Answer     string `bson:"answer" json:"answer"`
+	Count      int    `bson:"count" json:"count"`
 }

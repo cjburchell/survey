@@ -11,7 +11,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main
 FROM scratch
 
 COPY --from=uibuilder /survey-ui/dist  /server/survey-ui/dist
-COPY survey1.json  /server
+COPY surveys1.json  /server
 COPY --from=serverbuilder /go/src/github.com/cjburchell/survey/main  /server
 
 WORKDIR  /server
