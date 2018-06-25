@@ -4,12 +4,10 @@ services:
     image: "mongo:3"
     ports:
      - "27017:27017"
-    volumes:
-     - /data/db:/data/db
   reefstatus:
-    image: "cjburchell/survey:latest"
+    build: .
     environment:
-         - DATABASE_URL=mongodb
+         - DATABASE_URL=mongodb:27017
          - LOG_CONSOLE=true
          - LOG_LEVEL=1
          - LOG_FILE=false
