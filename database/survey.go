@@ -9,7 +9,7 @@ import (
 
 var surveys map[string]models.Survey
 
-// Get a survey given the survey id
+// GetSurvey gets a survey given the survey id
 func GetSurvey(surveyId string) (*models.Survey, error) {
 	// check to see if the survey is in the cash
 	if survey, ok := surveys[surveyId]; ok {

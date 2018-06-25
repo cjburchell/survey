@@ -10,7 +10,7 @@ var session *mgo.Session
 
 var databaseName string
 
-// Connects to the database
+// Connect to the database
 func Connect() (err error) {
 	databaseName = common.GetEnv("DATABASE_NAME", "survey")
 	databaseUrl := common.GetEnv("DATABASE_URL", "mongodb")

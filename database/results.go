@@ -8,7 +8,7 @@ import (
 const resultsCollection = "results"
 const surveyCollection = "survey"
 
-// Gets all the results for a given survey
+// GetAllResults gets all the results for a given survey
 func GetAllResults(surveyId string) (results []models.Result, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
@@ -17,7 +17,7 @@ func GetAllResults(surveyId string) (results []models.Result, err error) {
 	return
 }
 
-// Gets the results for a given survey and question
+// GetResults gets the results for a given survey and question
 func GetResults(surveyId string, questionId string) (results []models.Result, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
@@ -26,7 +26,7 @@ func GetResults(surveyId string, questionId string) (results []models.Result, er
 	return
 }
 
-// Increment a survey answer count
+// IncrementResult increments a survey answer count
 func IncrementResult(surveyId string, questionId string, answer string) (err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
@@ -47,7 +47,7 @@ func IncrementResult(surveyId string, questionId string, answer string) (err err
 	return
 }
 
-// Increment the survey submit count
+// IncrementSubmitCount increments the survey submit count
 func IncrementSubmitCount(surveyId string) (err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
@@ -65,7 +65,7 @@ func IncrementSubmitCount(surveyId string) (err error) {
 	return
 }
 
-// Get the survey submit count
+// GetSubmitCount Gets the survey submit count
 func GetSubmitCount(surveyId string) (count int) {
 	tempSession := session.Clone()
 	defer tempSession.Close()

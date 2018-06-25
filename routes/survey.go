@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-// Sets up the routes
+// Setup the routes
 func Setup(router *mux.Router) {
 	surveyRoute := router.PathPrefix("/survey").Subrouter()
 	surveyRoute.HandleFunc("/{surveyId}", handleGetSurvey).Methods("GET")

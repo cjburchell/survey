@@ -7,7 +7,7 @@ type Survey struct {
 	Questions []Question `json:"questions"`
 }
 
-// A Question's choice
+// Choice object
 type Choice struct {
 	Id    string `json:"id"`
 	Text  string `json:"text"`
@@ -22,7 +22,7 @@ type Question struct {
 	Choices []Choice `json:"choices"`
 }
 
-// Answer Data
+// Answer data
 type Answer struct {
 	QuestionId string `json:"questionId"`
 	Answer     string `json:"answer"`
