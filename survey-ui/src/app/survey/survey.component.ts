@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Result, Survey, SurveyService} from "../survey.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Result, Survey, SurveyService} from '../survey.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-survey',
@@ -8,9 +8,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: []
 })
 export class SurveyComponent implements OnInit {
-  @Input() surveyId : string;
+  @Input() surveyId: string;
   answersForm: FormGroup;
-  survey : Survey;
+  survey: Survey;
   showResults: boolean;
   results: Result[];
   submitCount: number;
@@ -26,10 +26,10 @@ export class SurveyComponent implements OnInit {
   }
 
   buildForm() {
-    let answers = [];
+    const answers = [];
     this.survey.questions.forEach(item => {
-      if (item.type === "MultipleSelection") {
-        let choices = [];
+      if (item.type === 'MultipleSelection') {
+        const choices = [];
 
         item.choices.forEach(choice => {
           choices.push(this.formBuilder.group({
@@ -42,19 +42,19 @@ export class SurveyComponent implements OnInit {
           'questionId': item.id,
           'type': item.type,
           'choices': this.formBuilder.array(choices)
-        }))
-      } else if (item.type === "Text"){
+        }));
+      } else if (item.type === 'Text') {
         answers.push(this.formBuilder.group({
           'questionId': item.id,
           'type': item.type,
-          'answer': ""
-        }))
+          'answer': ''
+        }));
       } else {
         answers.push(this.formBuilder.group({
           'questionId': item.id,
           'type': item.type,
-          'answer': ["", Validators.required]
-        }))
+          'answer': ['', Validators.required]
+        }));
       }
     });
 
@@ -63,31 +63,31 @@ export class SurveyComponent implements OnInit {
     });
   }
 
-  onViewResults(){
+  onViewResults() {
     this.surveyService.getCount(this.surveyId).subscribe(result => {
       this.submitCount = result.count;
       this.showResults = true;
     });
   }
 
-  onDone(result){
-    let answerList = [];
+  onDone(result) {
+    const answerList = [];
     result.answers.forEach((answer) => {
-      if(answer.type === "MultipleSelection"){
+      if (answer.type === 'MultipleSelection') {
         answer.choices.forEach(choice => {
-          if(choice.answer){
+          if (choice.answer) {
             answerList.push({
-              "questionId": answer.questionId,
-              "answer": choice.id
-            })
+              'questionId': answer.questionId,
+              'answer': choice.id
+            });
           }
         });
-      } else if (answer.answer){
-        answerList.push(answer)
+      } else if (answer.answer) {
+        answerList.push(answer);
       }
     });
 
-    this.surveyService.setAnswers(this.surveyId,  answerList).subscribe(() => {
+    this.surveyService.setAnswers(this.surveyId, answerList).subscribe(() => {
       // Update and view the results
       this.onViewResults();
     });

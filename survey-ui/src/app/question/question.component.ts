@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../survey.service";
-import {FormGroup} from "@angular/forms";
+import {Question} from '../survey.service';
+import {FormGroup} from '@angular/forms';
 
 
 function range(start: number, end: number) {
@@ -14,12 +14,12 @@ function range(start: number, end: number) {
 })
 export class QuestionComponent implements OnInit {
   @Input() group: FormGroup;
-  @Input() question : Question;
-  @Input() number : number;
+  @Input() question: Question;
+  @Input() number: number;
   choices: number[];
 
   ngOnInit() {
-    if (this.question.type === "Range"){
+    if (this.question.type === 'Range') {
       this.choices = range(this.question.choices[0].value, this.question.choices[1].value);
     }
   }
