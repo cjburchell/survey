@@ -9,6 +9,7 @@ import (
 	"net/http"
 )
 
+// Sets up the routes
 func Setup(router *mux.Router) {
 	surveyRoute := router.PathPrefix("/survey").Subrouter()
 	surveyRoute.HandleFunc("/{surveyId}", handleGetSurvey).Methods("GET")
@@ -32,6 +33,11 @@ func handleGetSurvey(writer http.ResponseWriter, request *http.Request) {
 	surveyId := vars["surveyId"]
 
 	survey, err := database.GetSurvey(surveyId)
+	if err != nil {
+		log.Error(err, "Unable to get survey")
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
 	reply, err := json.Marshal(survey)
 	if err != nil {
