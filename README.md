@@ -9,9 +9,9 @@ A simple survey server that allows users to submit a pre-setup survey and to vew
 ## Live Server
 http://ec2-54-157-15-206.compute-1.amazonaws.com:8099
 
-## Installation
+## Bulding and Running
 
-To run the server follow the following instructions:
+To build and run the server follow the following instructions:
 1. Download and install the latest version of docker from http://www.docker.com/get-docker
 2. Download or clone this repo `git clone https://github.com/cjburchell/survey.git survey`
 3. run `docker-compose up`
