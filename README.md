@@ -14,5 +14,5 @@ http://ec2-54-157-15-206.compute-1.amazonaws.com:8099
 To build and run the server follow the following instructions:
 1. Download and install the latest version of docker from http://www.docker.com/get-docker
 2. Download or clone this repo `git clone https://github.com/cjburchell/survey.git survey`
-3. in the survey directory run `docker-compose up` this will build the server and the docker images and also run the server
-4. in a web browser browse to http://localhost:8099 to view the survey form
+3. In the survey directory run `docker-compose up` this will build the server and the docker images and also run the server
+4. In a web browser browse to http://localhost:8099 to view the survey form
