@@ -1,22 +1,20 @@
-<h4>{{number + 1}}. {{ question?.text }}</h4>
+<ng-template [ngIf]="survey">
+  <nav  class="navbar navbar-expand-sm bg-light fixed-top">
+    <h2>{{ survey?.name }} Results</h2>
+  </nav >
 
-<table class="table table-bordered table-sm">
-  <thead>
-    <tr class="d-flex">
-      <th class="col-3">Answer</th>
-      <th class="col-7"><div class="row"><div class="col text-left">0%</div> <div class="col text-right">100%</div></div></th>
-      <th class="col-1">Count</th>
-      <th class="col-1">Percent</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="d-flex" *ngFor="let result of results">
-      <td class="col-3">{{result.answer}}</td>
-      <td class="col-7"><ngb-progressbar type="info" [value]="(result.count/submitCount) * 100"></ngb-progressbar></td>
-      <td class="col-1 text-right">{{(result.count)}}</td>
-      <td class="col-1 text-right">{{(result.count/submitCount) | percent }}</td>
-    </tr>
-  </tbody>
-</table>
+  <div style="margin-top:80px">
+    <div class="row container-fluid">
+      <div class="col">
+        <div *ngFor="let question of survey?.questions; let i = index">
+          <app-result [question] = "question" [number] = "i" [surveyId]="surveyId" [submitCount]="submitCount"></app-result>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center" style="margin-top:10px; margin-bottom:10px">
+      <button type="button" class="btn btn-outline-secondary btn-lg" (click)="back()">Back</button>
+    </div>
+  </div>
+</ng-template>
 
 

@@ -1,4 +1,4 @@
-<ng-template [ngIf]="!showResults && survey">
+<ng-template [ngIf]="survey">
     <nav  class="navbar navbar-expand-sm bg-light fixed-top">
       <h2>{{ survey?.name }}</h2>
     </nav >
@@ -6,7 +6,7 @@
     <div style="margin-top:80px">
       <form
         [formGroup] = "answersForm"
-        (ngSubmit)="onDone(answersForm.value)">
+        (ngSubmit)="onDone(answersForm?.value)">
 
         <div class="row container-fluid">
           <div class="col-2"></div>
@@ -24,7 +24,7 @@
 
         <div class="row" style="margin-top:10px; margin-bottom:10px">
           <div class="col">
-            <button type="submit" class="btn btn-outline-success btn-lg float-right" [disabled]="!answersForm.valid">Done</button>
+            <button type="submit" class="btn btn-outline-success btn-lg float-right" [disabled]="!answersForm?.valid">Done</button>
           </div>
           <div class="col">
             <button type="button" class="btn btn-outline-secondary btn-lg float-left" (click)="onViewResults()">Results</button>
@@ -33,26 +33,6 @@
       </form>
     </div>
 </ng-template>
-
-  <ng-template [ngIf]="showResults && survey">
-    <nav  class="navbar navbar-expand-sm bg-light fixed-top">
-      <h2>{{ survey?.name }} Results</h2>
-    </nav >
-
-    <div style="margin-top:80px">
-      <div class="row container-fluid">
-        <div class="col">
-            <div *ngFor="let question of survey?.questions; let i = index">
-                <app-results [question] = "question" [number] = "i" [surveyId]="surveyId" [submitCount]="submitCount"></app-results>
-            </div>
-        </div>
-      </div>
-
-      <div class="row justify-content-center" style="margin-top:10px; margin-bottom:10px">
-          <button type="button" class="btn btn-outline-secondary btn-lg" (click)="showResults = false">Back</button>
-      </div>
-    </div>
-  </ng-template>
 
 
 

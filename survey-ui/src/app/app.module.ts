@@ -8,19 +8,23 @@ import { QuestionComponent } from './question/question.component';
 import { SurveyComponent } from './survey/survey.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ResultsComponent } from './results/results.component';
+import { routing } from './app.routing';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionComponent,
     SurveyComponent,
-    ResultsComponent
+    ResultsComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]
