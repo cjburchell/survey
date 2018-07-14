@@ -2,9 +2,9 @@ package routes
 
 import (
 	"encoding/json"
-	"github.com/cjburchell/reefstatus-go/common/log"
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/models"
+	"github.com/cjburchell/yasls-client-go"
 	"github.com/gorilla/mux"
 	"net/http"
 )

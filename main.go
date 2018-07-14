@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/cjburchell/reefstatus-go/common/log"
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/routes"
+	"github.com/cjburchell/yasls-client-go"
 	"github.com/gorilla/mux"
 	"net/http"
 	"time"
 )
 
 func main() {
+	log.Setup(true)
+
 	log.Print("Starting survey service")
 	err := database.Connect()
 	if err != nil {

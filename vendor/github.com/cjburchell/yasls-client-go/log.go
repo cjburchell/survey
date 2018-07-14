@@ -2,10 +2,12 @@ package log
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
-	"github.com/cjburchell/reefstatus-go/common"
-	"gopkg.in/natefinch/lumberjack.v2"
+	"github.com/cjburchell/tools-go"
+	"github.com/nats-io/go-nats"
 	"log"
+	"os"
 	"runtime"
 	"time"
 )
@@ -27,7 +29,7 @@ func getStackTrace() string {
 
 	var buffer bytes.Buffer
 	buffer.WriteString(fmt.Sprintf("Stacktrace:\n"))
-	var i int = 2
+	i := 2
 	for i < 40 {
 		if function1, file1, line1, ok := runtime.Caller(i); ok {
 			buffer.WriteString(fmt.Sprintf("      at %s (%s:%d)\n", runtime.FuncForPC(function1).Name(), file1, line1))
@@ -96,30 +98,61 @@ func Printf(format string, v ...interface{}) {
 	printLog(fmt.Sprintf(format, v...), INFO)
 }
 
-var minLogLevel int
-var logToConsole bool
-var logToFile bool
-var logger = lumberjack.Logger{
-	MaxAge:     1,
-	MaxBackups: 20,
+var hostname, _ = os.Hostname()
+var serviceName = ""
+var minLogLevel = INFO.Severity
+var logToConsole = true
+var natsConn *nats.Conn
+
+func Setup(fatal bool) (err error) {
+	serviceName = tools.GetEnv("LOG_SERVICE_NAME", "")
+	minLogLevel = tools.GetEnvInt("LOG_LEVEL", INFO.Severity)
+	logToConsole = tools.GetEnvBool("LOG_CONSOLE", true)
+	natsUrl := tools.GetEnv("NATS_URL", "tcp://nats:4222")
+
+	natsConn, err = nats.Connect(natsUrl)
+	if err != nil {
+		if fatal {
+			log.Fatalf("Can't connect: %v\n", err)
+		} else {
+			log.Printf("Can't connect: %v\n", err)
+		}
+	}
+
+	return err
 }
 
-func init() {
-	minLogLevel = common.GetEnvInt("LOG_LEVEL", 1)
-	logToConsole = common.GetEnvBool("LOG_CONSOLE", true)
-	logToFile = common.GetEnvBool("LOG_FILE", false)
-	logger.Filename = common.GetEnv("LOG_FILE_PATH", "e:\\data\\log\\server.log")
+type LogMessage struct {
+	Text        string
+	Level       Level
+	ServiceName string
+	Time        int64
+	Hostname    string
+}
+
+func (message LogMessage) String() string {
+	return fmt.Sprintf("[%s] %d %s - %s", message.Level.Text, message.Time, message.ServiceName, message.Text)
 }
 
 func printLog(text string, level Level) {
-	if level.Severity >= minLogLevel {
-		formattedText := fmt.Sprintf("[%s] %d - %s", level.Text, time.Now().UnixNano()/1000000, text)
-		if logToConsole {
-			fmt.Println(formattedText)
+	message := LogMessage{
+		Text:        text,
+		Level:       level,
+		ServiceName: serviceName,
+		Time:        time.Now().UnixNano() / 1000000,
+		Hostname:    hostname,
+	}
+
+	if level.Severity >= minLogLevel && logToConsole {
+		fmt.Println(message.String())
+	}
+
+	if natsConn != nil {
+		messageBites, err := json.Marshal(message)
+		if err != nil {
+			fmt.Println("error:", err)
 		}
 
-		if logToFile {
-			logger.Write([]byte(formattedText + "\n"))
-		}
+		natsConn.Publish("logs", messageBites)
 	}
 }

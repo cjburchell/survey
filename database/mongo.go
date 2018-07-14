@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/cjburchell/reefstatus-go/common"
-	"github.com/cjburchell/reefstatus-go/common/log"
+	"github.com/cjburchell/tools-go"
+	"github.com/cjburchell/yasls-client-go"
 	"gopkg.in/mgo.v2"
 )
 
@@ -12,8 +12,8 @@ var databaseName string
 
 // Connect to the database
 func Connect() (err error) {
-	databaseName = common.GetEnv("DATABASE_NAME", "survey")
-	databaseUrl := common.GetEnv("DATABASE_URL", "mongodb")
+	databaseName = tools.GetEnv("DATABASE_NAME", "survey")
+	databaseUrl := tools.GetEnv("DATABASE_URL", "mongodb")
 	log.Printf("Connecting to Database at %s", databaseUrl)
 	session, err = mgo.Dial(databaseUrl)
 	return
