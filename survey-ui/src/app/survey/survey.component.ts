@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Result, Survey, SurveyService} from '../survey.service';
+import {Survey, SurveyService} from '../survey.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-survey',
@@ -8,20 +9,24 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: []
 })
 export class SurveyComponent implements OnInit {
-  @Input() surveyId: string;
+  surveyId: string;
   answersForm: FormGroup;
   survey: Survey;
-  showResults: boolean;
-  results: Result[];
-  submitCount: number;
 
-  constructor(private surveyService: SurveyService, private formBuilder: FormBuilder) {
+  constructor(
+    private surveyService: SurveyService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.surveyService.getSurvey(this.surveyId).subscribe((survey: Survey) => {
-      this.survey = survey;
-      this.answersForm = this.buildForm();
+    this.activatedRoute.params.subscribe(params => {
+      this.surveyId = params['surveyId'];
+      this.surveyService.getSurvey(this.surveyId).subscribe((survey: Survey) => {
+        this.survey = survey;
+        this.answersForm = this.buildForm();
+      });
     });
   }
 
@@ -64,10 +69,7 @@ export class SurveyComponent implements OnInit {
   }
 
   onViewResults() {
-    this.surveyService.getCount(this.surveyId).subscribe(result => {
-      this.submitCount = result.count;
-      this.showResults = true;
-    });
+    this.router.navigate([`/results/${this.surveyId}`]);
   }
 
   onDone(result) {
