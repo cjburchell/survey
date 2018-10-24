@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/routes"
 	"github.com/cjburchell/yasls-client-go"
 	"github.com/gorilla/mux"
-	"net/http"
-	"time"
 )
 
 func main() {
-	log.Setup(true)
+	log.Setup(log.CreateDefaultSettings())
 
 	log.Print("Starting survey service")
 	err := database.Connect()
