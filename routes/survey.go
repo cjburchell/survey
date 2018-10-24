@@ -112,10 +112,10 @@ func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Reque
 	log.Debugf("handleGetResultsForId %s", request.URL.String())
 
 	vars := mux.Vars(request)
-	questionId := vars["questionId"]
+	questionID := vars["questionId"]
 	surveyID := vars["surveyId"]
 
-	results, err := database.GetResults(surveyID, questionId)
+	results, err := database.GetResults(surveyID, questionID)
 	if err != nil {
 		log.Error(err, "GetAllResults Failed")
 		writer.WriteHeader(http.StatusInternalServerError)

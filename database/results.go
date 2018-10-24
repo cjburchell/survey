@@ -18,22 +18,22 @@ func GetAllResults(surveyID string) (results []models.Result, err error) {
 }
 
 // GetResults gets the results for a given survey and question
-func GetResults(surveyID string, questionId string) (results []models.Result, err error) {
+func GetResults(surveyID string, questionID string) (results []models.Result, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
-	err = tempSession.DB(databaseName).C(resultsCollection).Find(bson.M{"surveyId": surveyID, "questionId": questionId}).All(&results)
+	err = tempSession.DB(databaseName).C(resultsCollection).Find(bson.M{"surveyId": surveyID, "questionId": questionID}).All(&results)
 	return
 }
 
 // IncrementResult increments a survey answer count
-func IncrementResult(surveyID string, questionId string, answer string) (err error) {
+func IncrementResult(surveyID string, questionID string, answer string) (err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
 	query := bson.M{
 		"surveyId":   surveyID,
-		"questionId": questionId,
+		"questionId": questionID,
 		"answer":     answer,
 	}
 
