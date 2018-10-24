@@ -9,10 +9,16 @@
 			"revisionTime": "2018-07-14T02:05:37Z"
 		},
 		{
-			"checksumSHA1": "IkbKMWTYoKiYYMSgCRfyLsNkIG0=",
+			"checksumSHA1": "ozRAidozP00XByADmMdaUO1kLEs=",
 			"path": "github.com/cjburchell/yasls-client-go",
-			"revision": "f45590649e3a4e278d0d0d0004ce870047695284",
-			"revisionTime": "2018-07-14T02:33:48Z"
+			"revision": "10d6755d961c4e41ff187cb4c1a0ccbdf4849c05",
+			"revisionTime": "2018-09-14T21:39:08Z"
+		},
+		{
+			"checksumSHA1": "UrOY9AlJnuaw7zQ+xHzhK/KpCjU=",
+			"path": "github.com/gorilla/context",
+			"revision": "51ce91d2eaddeca0ef29a71d766bb3634dadf729",
+			"revisionTime": "2018-10-12T15:35:48Z"
 		},
 		{
 			"checksumSHA1": "ygXockrx7DYmGK9kAojU/Zvbu6Y=",
@@ -45,29 +51,34 @@
 			"revisionTime": "2017-10-25T20:31:29Z"
 		},
 		{
-			"checksumSHA1": "YFQU7VULoTU4TwPz3V97b2exyxE=",
+			"checksumSHA1": "QS15F7XdFG6tSDF3LfAZJTEgbK8=",
 			"path": "gopkg.in/mgo.v2",
-			"revision": ""
+			"revision": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5",
+			"revisionTime": "2018-07-05T11:36:04Z"
 		},
 		{
-			"checksumSHA1": "jczI9Z+BmhUsE77Q3SOmk+agclI=",
+			"checksumSHA1": "Np/IH5aN4KNgY+8MBEYV2ewgExI=",
 			"path": "gopkg.in/mgo.v2/bson",
-			"revision": ""
+			"revision": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5",
+			"revisionTime": "2018-07-05T11:36:04Z"
 		},
 		{
-			"checksumSHA1": "THym5Z04Rz7tjLhnIusfIxvJHKA=",
+			"checksumSHA1": "9tMleZvl/yjpkj7oO3pOfZc+MJw=",
 			"path": "gopkg.in/mgo.v2/internal/json",
-			"revision": ""
+			"revision": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5",
+			"revisionTime": "2018-07-05T11:36:04Z"
 		},
 		{
 			"checksumSHA1": "WnXjUmdgl3mTwwqYBxbO974iCe8=",
 			"path": "gopkg.in/mgo.v2/internal/sasl",
-			"revision": ""
+			"revision": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5",
+			"revisionTime": "2018-07-05T11:36:04Z"
 		},
 		{
-			"checksumSHA1": "w0zmUfvc8qJb+iS/IDJWptrBpIg=",
+			"checksumSHA1": "CrciG7woshiINwZxPsxisgDGL3Y=",
 			"path": "gopkg.in/mgo.v2/internal/scram",
-			"revision": ""
+			"revision": "9856a29383ce1c59f308dd1cf0363a79b5bef6b5",
+			"revisionTime": "2018-07-05T11:36:04Z"
 		}
 	],
 	"rootPath": "github.com/cjburchell/survey"
