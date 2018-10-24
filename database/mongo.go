@@ -13,8 +13,8 @@ var databaseName string
 // Connect to the database
 func Connect() (err error) {
 	databaseName = tools.GetEnv("DATABASE_NAME", "survey")
-	databaseUrl := tools.GetEnv("DATABASE_URL", "mongodb")
-	log.Printf("Connecting to Database at %s", databaseUrl)
-	session, err = mgo.Dial(databaseUrl)
+	databaseURL := tools.GetEnv("DATABASE_URL", "mongodb")
+	log.Printf("Connecting to Database at %s", databaseURL)
+	session, err = mgo.Dial(databaseURL)
 	return
 }

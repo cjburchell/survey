@@ -9,30 +9,30 @@ const resultsCollection = "results"
 const surveyCollection = "survey"
 
 // GetAllResults gets all the results for a given survey
-func GetAllResults(surveyId string) (results []models.Result, err error) {
+func GetAllResults(surveyID string) (results []models.Result, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
-	err = tempSession.DB(databaseName).C(resultsCollection).Find(bson.M{"surveyId": surveyId}).All(&results)
+	err = tempSession.DB(databaseName).C(resultsCollection).Find(bson.M{"surveyId": surveyID}).All(&results)
 	return
 }
 
 // GetResults gets the results for a given survey and question
-func GetResults(surveyId string, questionId string) (results []models.Result, err error) {
+func GetResults(surveyID string, questionId string) (results []models.Result, err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
-	err = tempSession.DB(databaseName).C(resultsCollection).Find(bson.M{"surveyId": surveyId, "questionId": questionId}).All(&results)
+	err = tempSession.DB(databaseName).C(resultsCollection).Find(bson.M{"surveyId": surveyID, "questionId": questionId}).All(&results)
 	return
 }
 
 // IncrementResult increments a survey answer count
-func IncrementResult(surveyId string, questionId string, answer string) (err error) {
+func IncrementResult(surveyID string, questionId string, answer string) (err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 
 	query := bson.M{
-		"surveyId":   surveyId,
+		"surveyId":   surveyID,
 		"questionId": questionId,
 		"answer":     answer,
 	}
@@ -48,11 +48,11 @@ func IncrementResult(surveyId string, questionId string, answer string) (err err
 }
 
 // IncrementSubmitCount increments the survey submit count
-func IncrementSubmitCount(surveyId string) (err error) {
+func IncrementSubmitCount(surveyID string) (err error) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 	query := bson.M{
-		"surveyId": surveyId,
+		"surveyId": surveyID,
 	}
 
 	update := bson.M{
@@ -66,11 +66,11 @@ func IncrementSubmitCount(surveyId string) (err error) {
 }
 
 // GetSubmitCount Gets the survey submit count
-func GetSubmitCount(surveyId string) (count int) {
+func GetSubmitCount(surveyID string) (count int) {
 	tempSession := session.Clone()
 	defer tempSession.Close()
 	query := bson.M{
-		"surveyId": surveyId,
+		"surveyId": surveyID,
 	}
 
 	var result struct {

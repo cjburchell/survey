@@ -2,11 +2,12 @@ package routes
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/models"
 	"github.com/cjburchell/yasls-client-go"
 	"github.com/gorilla/mux"
-	"net/http"
 )
 
 // Setup the routes
@@ -30,9 +31,9 @@ func handleGetSurvey(writer http.ResponseWriter, request *http.Request) {
 	log.Debugf("handleGetQuestions %s", request.URL.String())
 
 	vars := mux.Vars(request)
-	surveyId := vars["surveyId"]
+	surveyID := vars["surveyId"]
 
-	survey, err := database.GetSurvey(surveyId)
+	survey, err := database.GetSurvey(surveyID)
 	if err != nil {
 		log.Error(err, "Unable to get survey")
 		writer.WriteHeader(http.StatusBadRequest)
@@ -55,9 +56,9 @@ func handleGetSurveyCount(writer http.ResponseWriter, request *http.Request) {
 	log.Debugf("handleGetSurveyCount %s", request.URL.String())
 
 	vars := mux.Vars(request)
-	surveyId := vars["surveyId"]
+	surveyID := vars["surveyId"]
 
-	count := database.GetSubmitCount(surveyId)
+	count := database.GetSubmitCount(surveyID)
 
 	result := struct {
 		Count int `json:"count"`
@@ -81,9 +82,9 @@ func handleGetResults(writer http.ResponseWriter, request *http.Request) {
 	log.Debugf("handleGetResults %s", request.URL.String())
 
 	vars := mux.Vars(request)
-	surveyId := vars["surveyId"]
+	surveyID := vars["surveyId"]
 
-	results, err := database.GetAllResults(surveyId)
+	results, err := database.GetAllResults(surveyID)
 	if err != nil {
 		log.Error(err, "GetAllResults Failed")
 		writer.WriteHeader(http.StatusInternalServerError)
@@ -112,9 +113,9 @@ func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Reque
 
 	vars := mux.Vars(request)
 	questionId := vars["questionId"]
-	surveyId := vars["surveyId"]
+	surveyID := vars["surveyId"]
 
-	results, err := database.GetResults(surveyId, questionId)
+	results, err := database.GetResults(surveyID, questionId)
 	if err != nil {
 		log.Error(err, "GetAllResults Failed")
 		writer.WriteHeader(http.StatusInternalServerError)
@@ -142,7 +143,7 @@ func handleSetAnswers(writer http.ResponseWriter, request *http.Request) {
 	log.Debugf("handleSetAnswers %s", request.URL.String())
 
 	vars := mux.Vars(request)
-	surveyId := vars["surveyId"]
+	surveyID := vars["surveyId"]
 
 	decoder := json.NewDecoder(request.Body)
 	var answers []models.Answer
@@ -153,7 +154,7 @@ func handleSetAnswers(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	err = database.IncrementSubmitCount(surveyId)
+	err = database.IncrementSubmitCount(surveyID)
 	if err != nil {
 		log.Error(err, "Unable to Increment Result")
 		writer.WriteHeader(http.StatusInternalServerError)
@@ -161,7 +162,7 @@ func handleSetAnswers(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	for _, answer := range answers {
-		err = database.IncrementResult(surveyId, answer.QuestionId, answer.Answer)
+		err = database.IncrementResult(surveyID, answer.QuestionID, answer.Answer)
 		if err != nil {
 			log.Error(err, "Unable to Increment Result")
 			writer.WriteHeader(http.StatusInternalServerError)

@@ -3,21 +3,22 @@ package database
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/cjburchell/survey/models"
 	"io/ioutil"
+
+	"github.com/cjburchell/survey/models"
 )
 
 var surveys map[string]models.Survey
 
 // GetSurvey gets a survey given the survey id
-func GetSurvey(surveyId string) (*models.Survey, error) {
+func GetSurvey(surveyID string) (*models.Survey, error) {
 	// check to see if the survey is in the cash
-	if survey, ok := surveys[surveyId]; ok {
+	if survey, ok := surveys[surveyID]; ok {
 		return &survey, nil
 	}
 
 	// load it from the json file
-	raw, err := ioutil.ReadFile(fmt.Sprintf("survey%s.json", surveyId))
+	raw, err := ioutil.ReadFile(fmt.Sprintf("survey%s.json", surveyID))
 	if err != nil {
 		return nil, err
 	}
