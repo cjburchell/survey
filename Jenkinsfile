@@ -25,7 +25,7 @@ pipeline{
                                      sh """cd ${PROJECT_PATH} && go list ./... | grep -v /vendor/ > projectPaths"""
                                      def paths = sh returnStdout: true, script:"""awk '{printf "/go/src/%s ",\$0} END {print ""}' projectPaths"""
 
-                                     sh """go vet ${paths} || true"""
+                                     //sh """go tool vet ${paths} || true"""
                                      sh """golint ${paths}"""
 
                                      warnings canComputeNew: true, canResolveRelativePaths: true, categoriesPattern: '', consoleParsers: [[parserName: 'Go Vet'], [parserName: 'Go Lint']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''
