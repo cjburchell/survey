@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/cjburchell/tools-go"
-	"github.com/cjburchell/yasls-client-go"
+	"github.com/cjburchell/go-uatu"
+	"github.com/cjburchell/tools-go/env"
 	"gopkg.in/mgo.v2"
 )
 
@@ -12,8 +12,8 @@ var databaseName string
 
 // Connect to the database
 func Connect() (err error) {
-	databaseName = tools.GetEnv("DATABASE_NAME", "survey")
-	databaseURL := tools.GetEnv("DATABASE_URL", "mongodb")
+	databaseName = env.Get("DATABASE_NAME", "survey")
+	databaseURL := env.Get("DATABASE_URL", "mongodb")
 	log.Printf("Connecting to Database at %s", databaseURL)
 	session, err = mgo.Dial(databaseURL)
 	return

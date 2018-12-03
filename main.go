@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/cjburchell/go-uatu"
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/routes"
-	"github.com/cjburchell/yasls-client-go"
 	"github.com/gorilla/mux"
 )
 
@@ -17,7 +17,7 @@ func main() {
 	log.Print("Starting survey service")
 	err := database.Connect()
 	if err != nil {
-		log.Fatalf("Unable to connect to database %s", err.Error())
+		log.Fatalf(err, "Unable to connect to database")
 	}
 
 	log.Print("Database Connected")

@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/cjburchell/go-uatu"
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/models"
-	"github.com/cjburchell/yasls-client-go"
 	"github.com/gorilla/mux"
 )
 

@@ -3,28 +3,28 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "idMqdF5Ei56ynzEYekyZKPl3uXo=",
-			"path": "github.com/cjburchell/tools-go",
-			"revision": "631ca75bc946404597b3407c0f15c6544bb643df",
-			"revisionTime": "2018-07-14T02:05:37Z"
+			"checksumSHA1": "fcP2BozqyThjZhAx86AKyUc8gOI=",
+			"path": "github.com/cjburchell/go-uatu",
+			"revision": "20ee84086d33a68bbbbf7bbe603559fa7d10da2a",
+			"revisionTime": "2018-12-03T03:57:51Z"
 		},
 		{
-			"checksumSHA1": "ozRAidozP00XByADmMdaUO1kLEs=",
-			"path": "github.com/cjburchell/yasls-client-go",
-			"revision": "10d6755d961c4e41ff187cb4c1a0ccbdf4849c05",
-			"revisionTime": "2018-09-14T21:39:08Z"
+			"checksumSHA1": "Xm/UfPh2k04K+XSjJzWWCAlIkJ0=",
+			"path": "github.com/cjburchell/tools-go/env",
+			"revision": "9a148bb98f007795aa55e05783ac6652290f9632",
+			"revisionTime": "2018-11-26T15:07:45Z"
 		},
 		{
-			"checksumSHA1": "UrOY9AlJnuaw7zQ+xHzhK/KpCjU=",
-			"path": "github.com/gorilla/context",
-			"revision": "51ce91d2eaddeca0ef29a71d766bb3634dadf729",
-			"revisionTime": "2018-10-12T15:35:48Z"
+			"checksumSHA1": "81JTshZnF89bLdkVUa+BjkwR6j4=",
+			"path": "github.com/cjburchell/tools-go/trace",
+			"revision": "9a148bb98f007795aa55e05783ac6652290f9632",
+			"revisionTime": "2018-11-26T15:07:45Z"
 		},
 		{
-			"checksumSHA1": "ygXockrx7DYmGK9kAojU/Zvbu6Y=",
+			"checksumSHA1": "kJXWK9r2PT3f0mvfFhbtCdQx8tE=",
 			"path": "github.com/gorilla/mux",
-			"revision": "5ab525f4fb1678e197ae59401e9050fa0b6cb5fd",
-			"revisionTime": "2017-12-08T16:08:15Z"
+			"revision": "3d80bc801bb034e17cae38591335b3b1110f1c47",
+			"revisionTime": "2018-10-30T15:25:28Z"
 		},
 		{
 			"checksumSHA1": "WnL/x0i1j2b7HZGV1sSKhaTQRbg=",
@@ -49,6 +49,12 @@
 			"path": "github.com/nats-io/nuid",
 			"revision": "33c603157d6fd1b0ac2599bcc4a286b36479a06d",
 			"revisionTime": "2017-10-25T20:31:29Z"
+		},
+		{
+			"checksumSHA1": "cWpu81/hYoLS4dRySWvEUhNdtbA=",
+			"path": "github.com/pkg/errors",
+			"revision": "059132a15dd08d6704c67711dae0cf35ab991756",
+			"revisionTime": "2018-10-23T23:59:46Z"
 		},
 		{
 			"checksumSHA1": "QS15F7XdFG6tSDF3LfAZJTEgbK8=",

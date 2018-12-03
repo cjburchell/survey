@@ -7,10 +7,13 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"runtime"
 	"time"
 
-	"github.com/cjburchell/tools-go"
+	"github.com/pkg/errors"
+
+	"github.com/cjburchell/tools-go/trace"
+
+	"github.com/cjburchell/tools-go/env"
 	"github.com/nats-io/go-nats"
 )
 
@@ -35,28 +38,22 @@ var (
 	FATAL = Level{Text: "Fatal", Severity: 4}
 )
 
-func getStackTrace() string {
+var levels = []Level{DEBUG,
+	INFO,
+	WARNING,
+	ERROR,
+	FATAL,
+}
 
-	var buffer bytes.Buffer
-	_, err := buffer.WriteString(fmt.Sprintf("Stacktrace:\n"))
-	if err != nil {
-		return ""
-	}
-
-	i := 2
-	for i < 40 {
-		if function1, file1, line1, ok := runtime.Caller(i); ok {
-			_, err = buffer.WriteString(fmt.Sprintf("      at %s (%s:%d)\n", runtime.FuncForPC(function1).Name(), file1, line1))
-			if err != nil {
-				return ""
-			}
-		} else {
-			break
+// GetLogLevel gets the log level for input text
+func GetLogLevel(levelText string) Level {
+	for i := range levels {
+		if levels[i].Text == levelText {
+			return levels[i]
 		}
-		i++
 	}
 
-	return buffer.String()
+	return INFO
 }
 
 // Warnf Print a formatted warning level message
@@ -71,37 +68,51 @@ func Warn(v ...interface{}) {
 
 // Error Print a error level message
 func Error(err error, v ...interface{}) {
-	msg := fmt.Sprint(v...)
-	if msg == "" {
-		msg = fmt.Sprintf("Error: %s\n%s", err.Error(), getStackTrace())
-	} else {
-		msg = fmt.Sprintf("%s\nError: %s\n%s", msg, err.Error(), getStackTrace())
-	}
-
-	printLog(msg, ERROR)
+	printErrorLog(err, fmt.Sprint(v...), ERROR)
 }
 
 // Errorf Print a formatted error level message
 func Errorf(err error, format string, v ...interface{}) {
-	msg := fmt.Sprintf(format, v...)
-	if msg == "" {
-		msg = fmt.Sprintf("Error: %s\n%s", err.Error(), getStackTrace())
-	} else {
-		msg = fmt.Sprintf("%s\nError: %s\n%s", msg, err.Error(), getStackTrace())
+	printErrorLog(err, fmt.Sprintf(format, v...), ERROR)
+}
+
+type stackTracer interface {
+	StackTrace() errors.StackTrace
+}
+
+func printErrorLog(err error, msg string, level Level) {
+	if err == nil {
+		printLog(msg, level)
 	}
 
-	printLog(msg, ERROR)
+	if msg == "" {
+		msg = fmt.Sprintf("Error: %s\n", err.Error())
+	} else {
+		msg = fmt.Sprintf("%s\nError: %s\n", msg, err.Error())
+	}
+
+	if err, ok := err.(stackTracer); ok {
+		msg += "Stack Trace -----------------------------------------------------------------------------------------\n"
+		for _, f := range err.StackTrace() {
+			msg += fmt.Sprintf("%+v\n", f)
+		}
+		msg += "-----------------------------------------------------------------------------------------------------"
+	} else {
+		msg += trace.GetStack(2)
+	}
+
+	printLog(msg, level)
 }
 
 // Fatal print fatal level message
-func Fatal(v ...interface{}) {
-	printLog(fmt.Sprint(v...), FATAL)
+func Fatal(err error, v ...interface{}) {
+	printErrorLog(err, fmt.Sprint(v...), FATAL)
 	log.Panic(v...)
 }
 
 // Fatalf print formatted fatal level message
-func Fatalf(format string, v ...interface{}) {
-	printLog(fmt.Sprintf(format, v...), FATAL)
+func Fatalf(err error, format string, v ...interface{}) {
+	printErrorLog(err, fmt.Sprintf(format, v...), FATAL)
 	log.Panicf(format, v...)
 }
 
@@ -134,7 +145,10 @@ type Settings struct {
 	ServiceName  string
 	RestAddress  string
 	NatsURL      string
-	MinLogLevel  int
+	NatsToken    string
+	NatsUser     string
+	NatsPassword string
+	MinLogLevel  Level
 	LogToConsole bool
 	UseNats      bool
 	UseRest      bool
@@ -143,13 +157,16 @@ type Settings struct {
 // CreateDefaultSettings creates a default settings object
 func CreateDefaultSettings() Settings {
 	var settings Settings
-	settings.ServiceName = tools.GetEnv("LOG_SERVICE_NAME", "")
-	settings.MinLogLevel = tools.GetEnvInt("LOG_LEVEL", INFO.Severity)
-	settings.LogToConsole = tools.GetEnvBool("LOG_CONSOLE", true)
-	settings.UseNats = tools.GetEnvBool("LOG_USE_NATS", true)
-	settings.UseRest = tools.GetEnvBool("LOG_USE_REST", false)
-	settings.RestAddress = tools.GetEnv("LOG_REST_URL", "http://logger:8082/log")
-	settings.NatsURL = tools.GetEnv("LOG_NATS_URL", "tcp://nats:4222")
+	settings.ServiceName = env.Get("LOG_SERVICE_NAME", "")
+	settings.MinLogLevel = GetLogLevel(env.Get("LOG_LEVEL", INFO.Text))
+	settings.LogToConsole = env.GetBool("LOG_CONSOLE", true)
+	settings.UseNats = env.GetBool("LOG_USE_NATS", true)
+	settings.UseRest = env.GetBool("LOG_USE_REST", false)
+	settings.RestAddress = env.Get("LOG_REST_URL", "http://logger:8082/log")
+	settings.NatsURL = env.Get("LOG_NATS_URL", "tcp://nats:4222")
+	settings.NatsToken = env.Get("LOG_NATS_TOKEN", "token")
+	settings.NatsUser = env.Get("LOG_NATS_USER", "admin")
+	settings.NatsPassword = env.Get("LOG_NATS_PASSWORD", "password")
 
 	return settings
 }
@@ -160,7 +177,19 @@ var settings Settings
 func Setup(newSettings Settings) (err error) {
 	settings = newSettings
 	if settings.UseNats {
-		natsConn, err = nats.Connect(settings.NatsURL)
+		natsConn, err = nats.Connect(
+			settings.NatsURL,
+			nats.Token(newSettings.NatsToken),
+			nats.UserInfo(newSettings.NatsUser, newSettings.NatsPassword),
+			nats.DisconnectHandler(func(nc *nats.Conn) {
+				log.Printf("Logger got disconnected\n")
+			}),
+			nats.ReconnectHandler(func(nc *nats.Conn) {
+				log.Printf("Logger reconnected to %v\n", nc.ConnectedUrl())
+			}),
+			nats.ClosedHandler(func(nc *nats.Conn) {
+				log.Printf("Logger connection closed. Reason: %q\n", nc.LastError())
+			}))
 		if err != nil {
 			log.Printf("Can't connect: %v\n", err)
 		}
@@ -175,11 +204,11 @@ func Setup(newSettings Settings) (err error) {
 
 // Message to be sent to centralized logger
 type Message struct {
-	Text        string
-	Level       Level
-	ServiceName string
-	Time        int64
-	Hostname    string
+	Text        string `json:"text"`
+	Level       Level  `json:"level"`
+	ServiceName string `json:"serviceName"`
+	Time        int64  `json:"time"`
+	Hostname    string `json:"hostname"`
 }
 
 func (message Message) String() string {
@@ -195,7 +224,7 @@ func printLog(text string, level Level) {
 		Hostname:    hostname,
 	}
 
-	if level.Severity >= settings.MinLogLevel && settings.LogToConsole {
+	if level.Severity >= settings.MinLogLevel.Severity && settings.LogToConsole {
 		fmt.Println(message.String())
 	}
 
