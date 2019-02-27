@@ -21,8 +21,8 @@ func Setup(router *mux.Router) {
 
 	router.HandleFunc("/@status", func(writer http.ResponseWriter, _ *http.Request) {
 		reply, _ := json.Marshal("Ok")
-		writer.WriteHeader(http.StatusOK)
 		writer.Header().Set("Content-Type", "application/json")
+		writer.WriteHeader(http.StatusOK)
 		writer.Write(reply)
 	}).Methods("GET")
 }
@@ -47,8 +47,8 @@ func handleGetSurvey(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	writer.WriteHeader(http.StatusOK)
 	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusOK)
 	writer.Write(reply)
 }
 
@@ -73,8 +73,8 @@ func handleGetSurveyCount(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	writer.WriteHeader(http.StatusOK)
 	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusOK)
 	writer.Write(reply)
 }
 
@@ -103,8 +103,8 @@ func handleGetResults(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	writer.WriteHeader(http.StatusOK)
 	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusOK)
 	writer.Write(reply)
 }
 
@@ -134,8 +134,8 @@ func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Reque
 		return
 	}
 
-	writer.WriteHeader(http.StatusOK)
 	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusOK)
 	writer.Write(reply)
 }
 
