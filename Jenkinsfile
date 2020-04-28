@@ -23,42 +23,42 @@ pipeline{
          }
 
          stage('Lint') {
-                     when { expression { params.Lint } }
-                     steps {
-                         script{
-                                 docker.image('cjburchell/goci:latest').inside("-v ${env.WORKSPACE}:${PROJECT_PATH}"){
-                                     sh """cd ${PROJECT_PATH} && go list ./... | grep -v /vendor/ > projectPaths"""
-                                     def paths = sh returnStdout: true, script:"""awk '{printf "/go/src/%s ",\$0} END {print ""}' projectPaths"""
+            when { expression { params.Lint } }
+            steps {
+                script{
+                        docker.image('cjburchell/goci:latest').inside("-v ${env.WORKSPACE}:${PROJECT_PATH}"){
+                            sh """cd ${PROJECT_PATH} && go list ./... | grep -v /vendor/ > projectPaths"""
+                            def paths = sh returnStdout: true, script:"""awk '{printf "/go/src/%s ",\$0} END {print ""}' projectPaths"""
 
-                                     sh """go vet ${paths}"""
-                                     sh """golint ${paths}"""
+                            sh """go vet ${paths}"""
+                            sh """golint ${paths}"""
 
-                                     warnings canComputeNew: true, canResolveRelativePaths: true, categoriesPattern: '', consoleParsers: [[parserName: 'Go Vet'], [parserName: 'Go Lint']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''
-                                 }
-                         }
-                     }
-                 }
+                            warnings canComputeNew: true, canResolveRelativePaths: true, categoriesPattern: '', consoleParsers: [[parserName: 'Go Vet'], [parserName: 'Go Lint']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''
+                        }
+                }
+            }
+        }
 
-                 stage('Tests') {
-                 when { expression { params.UnitTests } }
-                     steps {
-                         script{
-                                 docker.image('cjburchell/goci:latest').inside("-v ${env.WORKSPACE}:${PROJECT_PATH}"){
-                                     sh """cd ${PROJECT_PATH} && go list ./... | grep -v /vendor/ > projectPaths"""
-                                     def paths = sh returnStdout: true, script:"""awk '{printf "/go/src/%s ",\$0} END {print ""}' projectPaths"""
+        stage('Tests') {
+        when { expression { params.UnitTests } }
+            steps {
+                script{
+                        docker.image('cjburchell/goci:latest').inside("-v ${env.WORKSPACE}:${PROJECT_PATH}"){
+                            sh """cd ${PROJECT_PATH} && go list ./... | grep -v /vendor/ > projectPaths"""
+                            def paths = sh returnStdout: true, script:"""awk '{printf "/go/src/%s ",\$0} END {print ""}' projectPaths"""
 
-                                     def testResults = sh returnStdout: true, script:"""go test -v ${paths}"""
-                                     writeFile file: 'test_results.txt', text: testResults
-                                     sh """go2xunit -input test_results.txt > tests.xml"""
-                                     sh """cd ${PROJECT_PATH} && ls"""
+                            def testResults = sh returnStdout: true, script:"""go test -v ${paths}"""
+                            writeFile file: 'test_results.txt', text: testResults
+                            sh """go2xunit -input test_results.txt > tests.xml"""
+                            sh """cd ${PROJECT_PATH} && ls"""
 
-                                     archiveArtifacts 'test_results.txt'
-                                     archiveArtifacts 'tests.xml'
-                                     junit allowEmptyResults: true, testResults: 'tests.xml'
-                                 }
-                         }
-                     }
-                 }
+                            archiveArtifacts 'test_results.txt'
+                            archiveArtifacts 'tests.xml'
+                            junit allowEmptyResults: true, testResults: 'tests.xml'
+                        }
+                }
+            }
+        }
 
         stage('Build image') {
             steps {
@@ -89,22 +89,24 @@ pipeline{
     }
 
     post {
-                always {
-                      script{
-                          if ( currentBuild.currentResult == "SUCCESS" ) {
-                            slackSend color: "good", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was successful"
-                          }
-                          else if( currentBuild.currentResult == "FAILURE" ) {
-                            slackSend color: "danger", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was failed"
-                          }
-                          else if( currentBuild.currentResult == "UNSTABLE" ) {
-                            slackSend color: "warning", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was unstable"
-                          }
-                          else {
-                            slackSend color: "danger", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} its result (${currentBuild.currentResult}) was unclear"
-                          }
-                      }
-                }
-            }
+        always {
+              script{
+			      sh "docker system prune -f || true"
+				  
+                  if ( currentBuild.currentResult == "SUCCESS" ) {
+                    slackSend color: "good", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was successful"
+                  }
+                  else if( currentBuild.currentResult == "FAILURE" ) {
+                    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was failed"
+                  }
+                  else if( currentBuild.currentResult == "UNSTABLE" ) {
+                    slackSend color: "warning", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} was unstable"
+                  }
+                  else {
+                    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} its result (${currentBuild.currentResult}) was unclear"
+                  }
+              }
+        }
+    }
 
 }
