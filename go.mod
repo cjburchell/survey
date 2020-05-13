@@ -1,15 +1,13 @@
 module github.com/cjburchell/survey
 
-go 1.12
+go 1.14
 
 require (
-	github.com/cjburchell/go-uatu v0.0.0-20181203035751-20ee84086d33
-	github.com/cjburchell/tools-go v0.0.0-20181126150745-9a148bb98f00
-	github.com/gorilla/mux v0.0.0-20181030152528-3d80bc801bb0
-	github.com/nats-io/go-nats v0.0.0-20181130015237-cee48fc43d6e
-	github.com/nats-io/nkeys v0.0.1
-	github.com/nats-io/nuid v0.0.0-20180712044959-3024a71c3cbe
-	github.com/pkg/errors v0.0.0-20181023235946-059132a15dd0
-	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
-	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
+	github.com/cjburchell/settings-go v1.0.0
+	github.com/cjburchell/tools-go v1.0.1
+	github.com/cjburchell/uatu-go v1.0.2
+	github.com/gorilla/mux v1.7.4
+	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
+	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )

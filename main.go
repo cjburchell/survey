@@ -2,25 +2,28 @@ package main
 
 import (
 	"fmt"
+	"github.com/cjburchell/settings-go"
+	"github.com/cjburchell/tools-go/env"
 	"net/http"
 	"time"
 
-	"github.com/cjburchell/go-uatu"
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/routes"
+	"github.com/cjburchell/uatu-go"
 	"github.com/gorilla/mux"
 )
 
 func main() {
-	log.Setup(log.CreateDefaultSettings())
+	configFile := settings.Get(env.Get("SettingsFile", ""))
+	logger := log.Create(configFile)
 
-	log.Print("Starting survey service")
-	err := database.Connect()
+	logger.Print("Starting survey service")
+	err := database.Connect(logger, configFile)
 	if err != nil {
-		log.Fatalf(err, "Unable to connect to database")
+		logger.Fatalf(err, "Unable to connect to database")
 	}
 
-	log.Print("Database Connected")
+	logger.Print("Database Connected")
 
 	router := mux.NewRouter()
 
@@ -28,11 +31,11 @@ func main() {
 		http.ServeFile(w, r, "survey-ui/dist/survey-ui/index.html")
 	})
 
-	routes.Setup(router)
+	routes.Setup(router, logger)
 
 	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("survey-ui/dist/survey-ui"))))
 
-	log.Print("Starting HTTP Server")
+	logger.Print("Starting HTTP Server")
 	server := &http.Server{
 		Handler:      router,
 		Addr:         ":8088",

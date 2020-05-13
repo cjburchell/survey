@@ -4,20 +4,30 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cjburchell/go-uatu"
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/models"
+	"github.com/cjburchell/uatu-go"
 	"github.com/gorilla/mux"
 )
 
 // Setup the routes
-func Setup(router *mux.Router) {
+func Setup(router *mux.Router, log log.ILog) {
 	surveyRoute := router.PathPrefix("/survey").Subrouter()
-	surveyRoute.HandleFunc("/{surveyId}", handleGetSurvey).Methods("GET")
-	surveyRoute.HandleFunc("/{surveyId}/results", handleGetResults).Methods("GET")
-	surveyRoute.HandleFunc("/{surveyId}/results/{questionId}", handleGetResultsForQuestion).Methods("GET")
-	surveyRoute.HandleFunc("/{surveyId}/answers", handleSetAnswers).Methods("POST")
-	surveyRoute.HandleFunc("/{surveyId}/count", handleGetSurveyCount).Methods("GET")
+	surveyRoute.HandleFunc("/{surveyId}", func(writer http.ResponseWriter, request *http.Request) {
+		handleGetSurvey(writer, request, log)
+	}).Methods("GET")
+	surveyRoute.HandleFunc("/{surveyId}/results", func(writer http.ResponseWriter, request *http.Request) {
+		handleGetResults(writer, request, log)
+	}).Methods("GET")
+	surveyRoute.HandleFunc("/{surveyId}/results/{questionId}", func(writer http.ResponseWriter, request *http.Request) {
+		handleGetResultsForQuestion(writer, request, log)
+	}).Methods("GET")
+	surveyRoute.HandleFunc("/{surveyId}/answers", func(writer http.ResponseWriter, request *http.Request) {
+		handleSetAnswers(writer, request, log)
+	}).Methods("POST")
+	surveyRoute.HandleFunc("/{surveyId}/count",func(writer http.ResponseWriter, request *http.Request) {
+		handleGetSurveyCount(writer, request, log)
+	}).Methods("GET")
 
 	router.HandleFunc("/@status", func(writer http.ResponseWriter, _ *http.Request) {
 		reply, _ := json.Marshal("Ok")
@@ -27,7 +37,7 @@ func Setup(router *mux.Router) {
 	}).Methods("GET")
 }
 
-func handleGetSurvey(writer http.ResponseWriter, request *http.Request) {
+func handleGetSurvey(writer http.ResponseWriter, request *http.Request, log log.ILog) {
 	log.Debugf("handleGetQuestions %s", request.URL.String())
 
 	vars := mux.Vars(request)
@@ -52,7 +62,7 @@ func handleGetSurvey(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(reply)
 }
 
-func handleGetSurveyCount(writer http.ResponseWriter, request *http.Request) {
+func handleGetSurveyCount(writer http.ResponseWriter, request *http.Request, log log.ILog) {
 	log.Debugf("handleGetSurveyCount %s", request.URL.String())
 
 	vars := mux.Vars(request)
@@ -78,7 +88,7 @@ func handleGetSurveyCount(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(reply)
 }
 
-func handleGetResults(writer http.ResponseWriter, request *http.Request) {
+func handleGetResults(writer http.ResponseWriter, request *http.Request, log log.ILog) {
 	log.Debugf("handleGetResults %s", request.URL.String())
 
 	vars := mux.Vars(request)
@@ -108,7 +118,7 @@ func handleGetResults(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(reply)
 }
 
-func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Request) {
+func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Request, log log.ILog) {
 	log.Debugf("handleGetResultsForId %s", request.URL.String())
 
 	vars := mux.Vars(request)
@@ -139,7 +149,7 @@ func handleGetResultsForQuestion(writer http.ResponseWriter, request *http.Reque
 	writer.Write(reply)
 }
 
-func handleSetAnswers(writer http.ResponseWriter, request *http.Request) {
+func handleSetAnswers(writer http.ResponseWriter, request *http.Request, log log.ILog) {
 	log.Debugf("handleSetAnswers %s", request.URL.String())
 
 	vars := mux.Vars(request)

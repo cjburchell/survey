@@ -3,7 +3,7 @@ COPY survey-ui /survey-ui
 RUN cd /survey-ui && npm install
 RUN cd /survey-ui && node_modules/@angular/cli/bin/ng build --prod
 
-FROM golang:1.12 as serverbuilder
+FROM golang:1.14 as serverbuilder
 WORKDIR /survey
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main
