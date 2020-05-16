@@ -2,20 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/cjburchell/settings-go"
-	"github.com/cjburchell/tools-go/env"
 	"net/http"
 	"time"
 
+	"github.com/cjburchell/settings-go"
+	"github.com/cjburchell/tools-go/env"
+
 	"github.com/cjburchell/survey/database"
 	"github.com/cjburchell/survey/routes"
-	"github.com/cjburchell/uatu-go"
+	log "github.com/cjburchell/uatu-go"
+	logSettings "github.com/cjburchell/uatu-go/settings"
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	configFile := settings.Get(env.Get("SettingsFile", ""))
-	logger := log.Create(configFile)
+	logger := log.Create(logSettings.Get(configFile.GetSection("Logging")))
 
 	logger.Print("Starting survey service")
 	err := database.Connect(logger, configFile)
