@@ -1,7 +1,8 @@
 FROM node:10-alpine as uibuilder
 COPY survey-ui /survey-ui
-RUN cd /survey-ui && npm install
-RUN cd /survey-ui && node_modules/@angular/cli/bin/ng build --prod
+WORKDIR /survey-ui
+RUN npm install
+RUN node_modules/@angular/cli/bin/ng build --prod
 
 FROM golang:1.14 as serverbuilder
 WORKDIR /survey
